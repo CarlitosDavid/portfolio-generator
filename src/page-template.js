@@ -1,6 +1,6 @@
-module.exports = templateData => {
-    return `
-    <!DOCTYPE html> 
+const generatePage = (userName, githubName) => {
+  return `
+  <!DOCTYPE html> 
   <html lang="en"> 
   <head>
     <meta charset="UTF-8">
@@ -10,12 +10,18 @@ module.exports = templateData => {
   </head>
 
   <body>
-    <h1>templateData.Carl</h1>
-    <h2><a href="https://github.com/templateData.Carlitos">Github</a></h2>
+    <h1>Carl</h1>
+    <h2><a href="https://github.com/CarlitosDavid">Github</a></h2>
   </body>
   </html>
-    
-  `;
+  `
+  ;
 };
+
+fs.writeFile('index.html', generatePage(name, github), err => {
+  if (err) throw err;
+
+  console.log('Portfolio complete! Check out index.html to see the output!');
+});
 
 module.exports = generatePage;
