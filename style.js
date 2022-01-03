@@ -1,3 +1,6 @@
+
+const fs = require('fs');
+const generatePage = require('./src/page-template');
 const inquirer = require('inquirer');
 
 const promptUser = () => {
@@ -97,7 +100,22 @@ const promptProject = portfolioData => {
             choices: ['JavaScript', 'HTML', 'CSS', 'ES6', 'jQuery', 'Bootstrip', 'Node']
         },
         {
-            type: 'confirm',
+
+            type: 'input', 
+            name: 'link',
+            message: 'Enter the GitHub link to your project. (Required)',
+            validate: linkInput => {
+                if (linkInput) {
+                    return true;
+                } else {
+                    console.log('You need to enter a project GitHub link!');
+                    return false;
+                }
+            }
+        },
+
+   {
+ type: 'confirm',
             name: 'feature',
             message: 'Would you like to feature this project?',
             default: false
@@ -123,6 +141,15 @@ const promptProject = portfolioData => {
 
 
 promptUser().then(promptProject).then(portfolioData => {
+    const pageHTML = generatePage(portfolioData);
+
+    fs.writeFile('./index.html', pageHTML, err => {
+        if (err) throw new Error(err);
+
+        console.log('Page created! Check out index.html in this directory to see it!');
+    });
+});
+
     console.log(portfolioData);
 });
 
